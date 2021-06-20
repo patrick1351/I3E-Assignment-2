@@ -28,7 +28,7 @@ public class SamplePlayer : MonoBehaviour
     /// The camera attached to the player model.
     /// Should be dragged in from Inspector.
     /// </summary>
-    private Camera playerCamera;
+    public Camera playerCamera;
 
     private string currentState;
 
@@ -37,16 +37,18 @@ public class SamplePlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nextState = "Idling";
+        nextState = "Idle";
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(nextState != currentState)
+        if (nextState != currentState)
         {
             SwitchState();
         }
+
+       
 
         CheckRotation();
     }
@@ -67,7 +69,7 @@ public class SamplePlayer : MonoBehaviour
     {
         while(currentState == "Idle")
         {
-            if(Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") != 0)
+            if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
                 nextState = "Moving";
             }
@@ -89,14 +91,16 @@ public class SamplePlayer : MonoBehaviour
 
     private void CheckRotation()
     {
-        Vector3 playerRotation = transform.rotation.eulerAngles;
-        playerRotation.y = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+        Vector2 playerRotation = gameObject.transform.rotation.eulerAngles;
+        playerRotation.y += Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+        playerRotation.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
 
-        transform.rotation = Quaternion.Euler(playerRotation);
+        gameObject.transform.rotation = Quaternion.Euler(playerRotation);
 
-        Vector3 cameraRotation = playerCamera.transform.rotation.eulerAngles;
-        cameraRotation.x += Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
 
+        Vector2 cameraRotation = playerCamera.transform.rotation.eulerAngles;
+        cameraRotation.y += Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+        cameraRotation.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
         playerCamera.transform.rotation = Quaternion.Euler(cameraRotation);
     }
 
