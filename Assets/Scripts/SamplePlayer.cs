@@ -48,7 +48,7 @@ public class SamplePlayer : MonoBehaviour
             SwitchState();
         }
 
-       
+        Debug.Log(currentState);
 
         CheckRotation();
     }
@@ -81,7 +81,7 @@ public class SamplePlayer : MonoBehaviour
     {
         while (currentState == "Moving")
         {
-            if (!CheckMovement())
+            if (CheckMovement())
             {
                 nextState = "Idle";
             }
@@ -91,7 +91,7 @@ public class SamplePlayer : MonoBehaviour
 
     private void CheckRotation()
     {
-        Vector2 playerRotation = gameObject.transform.rotation.eulerAngles;
+        Vector2 playerRotation = transform.rotation.eulerAngles;
         playerRotation.y += Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
         playerRotation.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
 
