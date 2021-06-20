@@ -37,7 +37,7 @@ public class SamplePlayer : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        nextState = "Idle";
+        nextState = "Idling";
     }
 
     // Update is called once per frame
@@ -55,7 +55,7 @@ public class SamplePlayer : MonoBehaviour
     /// Sets the current state of the player
     /// and starts the correct coroutine.
     /// </summary>
-    public void SwitchState()
+    private void SwitchState()
     {
         StopCoroutine(currentState);
 
@@ -87,7 +87,7 @@ public class SamplePlayer : MonoBehaviour
         }
     }
 
-    public void CheckRotation()
+    private void CheckRotation()
     {
         Vector3 playerRotation = transform.rotation.eulerAngles;
         playerRotation.y = Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
@@ -104,7 +104,7 @@ public class SamplePlayer : MonoBehaviour
     /// Checks and handles movement of the player
     /// </summary>
     /// <returns>True if user input is detected and player is moved.</returns>
-    bool CheckMovement()
+    private bool CheckMovement()
     {
         Vector3 newPos = transform.position;
 
