@@ -34,10 +34,16 @@ public class SamplePlayer : MonoBehaviour
 
     private string nextState;
 
+    public Vector3 playerRotation;
+
     // Start is called before the first frame update
     void Start()
     {
         nextState = "Idle";
+
+        Cursor.lockState = CursorLockMode.Locked;
+
+        playerRotation = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -91,16 +97,16 @@ public class SamplePlayer : MonoBehaviour
 
     private void CheckRotation()
     {
-        Vector2 playerRotation = transform.rotation.eulerAngles;
+        playerRotation = transform.rotation.eulerAngles;
         playerRotation.y += Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
-        playerRotation.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
 
-        gameObject.transform.rotation = Quaternion.Euler(playerRotation);
+        transform.localRotation = Quaternion.Euler(0f, playerRotation.y, 0f);
 
 
-        Vector2 cameraRotation = playerCamera.transform.rotation.eulerAngles;
-        cameraRotation.y += Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+        Vector3 cameraRotation = playerCamera.transform.rotation.eulerAngles;
+        //cameraRotation.y += Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
         cameraRotation.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
+        //cameraRotation.z = 0;
         playerCamera.transform.rotation = Quaternion.Euler(cameraRotation);
     }
 
