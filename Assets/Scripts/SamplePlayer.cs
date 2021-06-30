@@ -60,11 +60,20 @@ public class SamplePlayer : MonoBehaviour
         Debug.Log(currentState);
 
         CheckRotation();
-        Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance);
+
+        //Set the layermask to the quest
+        //Only item with the quest will be affected 
+        int layerMask = 1 << LayerMask.NameToLayer("Quest");
+
+        //Draw line will show green if hit and red if no hit
         RaycastHit hitInfo;
-        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance))
+        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance, layerMask))
         {
+            Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.green);
             Debug.Log("hit hit hit");
+        } else
+        {
+            Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.red);
         }
     }
 
