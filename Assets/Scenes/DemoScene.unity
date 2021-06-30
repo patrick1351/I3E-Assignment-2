@@ -499,7 +499,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   rotationSpeed: 130
-  interectionDistance: 5
   playerCamera: {fileID: 975121755}
   playerRotation: {x: 0, y: 0, z: 0}
 --- !u!136 &1171057984
