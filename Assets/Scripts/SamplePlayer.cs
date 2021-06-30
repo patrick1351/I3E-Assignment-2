@@ -24,6 +24,9 @@ public class SamplePlayer : MonoBehaviour
     [SerializeField]
     private float rotationSpeed;
 
+    [SerializeField]
+    private float interectionDistance;
+
     /// <summary>
     /// The camera attached to the player model.
     /// Should be dragged in from Inspector.
@@ -41,7 +44,7 @@ public class SamplePlayer : MonoBehaviour
     {
         nextState = "Idle";
 
-        Cursor.lockState = CursorLockMode.Locked;
+        //Cursor.lockState = CursorLockMode.Locked;
 
         playerRotation = Vector3.zero;
     }
@@ -57,6 +60,12 @@ public class SamplePlayer : MonoBehaviour
         Debug.Log(currentState);
 
         CheckRotation();
+        Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance);
+        RaycastHit hitInfo;
+        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance))
+        {
+            Debug.Log("hit hit hit");
+        }
     }
 
     /// <summary>
