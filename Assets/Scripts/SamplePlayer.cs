@@ -104,9 +104,7 @@ public class SamplePlayer : MonoBehaviour
 
 
         Vector3 cameraRotation = playerCamera.transform.rotation.eulerAngles;
-        //cameraRotation.y += Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
         cameraRotation.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
-        //cameraRotation.z = 0;
         playerCamera.transform.rotation = Quaternion.Euler(cameraRotation);
     }
 
