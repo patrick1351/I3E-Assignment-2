@@ -70,7 +70,12 @@ public class SamplePlayer : MonoBehaviour
         if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance, layerMask))
         {
             Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.green);
-            Debug.Log("hit hit hit");
+            if (Input.GetKeyDown("e"))
+            {
+                Debug.Log("hit hit hit");
+            }
+            
+            
         } else
         {
             Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.red);
