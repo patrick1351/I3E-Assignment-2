@@ -65,6 +65,7 @@ public class SamplePlayer : MonoBehaviour
         if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance))
         {
             Debug.Log("hit hit hit");
+            Debug.Log(hitInfo.transform.name);
         }
     }
 
