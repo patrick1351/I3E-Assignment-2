@@ -38,13 +38,21 @@ public class SamplePlayer : MonoBehaviour
     private string nextState;
 
     public Vector3 playerRotation;
+    public Vector3 cameraRotation;
+
+    public GameManager gameManagerScript;
+
+    void Awake()
+    {
+        playerRotation = transform.rotation.eulerAngles;
+        cameraRotation = playerCamera.transform.rotation.eulerAngles;
+
+    }
 
     // Start is called before the first frame update
     void Start()
     {
         nextState = "Idle";
-
-        //Cursor.lockState = CursorLockMode.Locked;
 
         playerRotation = Vector3.zero;
     }
@@ -60,11 +68,32 @@ public class SamplePlayer : MonoBehaviour
         Debug.Log(currentState);
 
         CheckRotation();
-        Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance);
+
+        //Set the layermask to the quest
+        //Only item with the quest will be affected 
+        int layerMask = 1 << LayerMask.NameToLayer("Quest");
+
+        //Draw line will show green if hit and red if no hit
         RaycastHit hitInfo;
-        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance))
+        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance, layerMask))
         {
+            Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.green);
+            gameManagerScript.lookAtItem = true;
+            if (Input.GetKeyDown("e") && hitInfo.collider.gameObject.name == "Magic Stone")
+            {
+                ++gameManagerScript.magicStone;
+                Debug.Log("Collecting magic stone");
+            }
+            
+            
+        } else
+        {
+<<<<<<< HEAD
             Debug.Log("hit hit hit");
+=======
+            Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.red);
+            gameManagerScript.lookAtItem = false;
+>>>>>>> f55ab6b2455621504defc23440fc764a2c73c5d6
         }
     }
 
@@ -112,10 +141,9 @@ public class SamplePlayer : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0f, playerRotation.y, 0f);
 
 
-        Vector3 cameraRotation = playerCamera.transform.rotation.eulerAngles;
-        //cameraRotation.y += Input.GetAxis("Mouse X") * rotationSpeed * Time.deltaTime;
+        cameraRotation = playerCamera.transform.rotation.eulerAngles;
         cameraRotation.x -= Input.GetAxis("Mouse Y") * rotationSpeed * Time.deltaTime;
-        //cameraRotation.z = 0;
+
         playerCamera.transform.rotation = Quaternion.Euler(cameraRotation);
     }
 
