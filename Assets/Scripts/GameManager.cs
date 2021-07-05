@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        questUI.text = "Magic Stone: " + magicStone.ToString();
+        questUI.SetText("Quest\n" +
+                        "Magic Stone: {0}", magicStone);
     }
 }
