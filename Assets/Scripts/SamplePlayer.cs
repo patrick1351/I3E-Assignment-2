@@ -40,13 +40,11 @@ public class SamplePlayer : MonoBehaviour
     public Vector3 playerRotation;
     public Vector3 cameraRotation;
 
-    [SerializeField]
-    private GameManager gameManagerScript;
-
     void Awake()
     {
         playerRotation = transform.rotation.eulerAngles;
         cameraRotation = playerCamera.transform.rotation.eulerAngles;
+
     }
 
     // Start is called before the first frame update
@@ -81,7 +79,6 @@ public class SamplePlayer : MonoBehaviour
             if (Input.GetKeyDown("e") && hitInfo.collider.gameObject.name == "Magic Stone")
             {
                 Debug.Log("Collecting magic stone");
-                ++gameManagerScript.magicStone;
             }
             
             
