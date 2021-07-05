@@ -78,7 +78,6 @@ public class SamplePlayer : MonoBehaviour
         if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance, layerMask))
         {
             Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.green);
-            gameManagerScript.lookAtItem = true;
             if (Input.GetKeyDown("e") && hitInfo.collider.gameObject.name == "Magic Stone")
             {
                 ++gameManagerScript.magicStone;
@@ -89,7 +88,6 @@ public class SamplePlayer : MonoBehaviour
         } else
         {
             Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.red);
-            gameManagerScript.lookAtItem = false;
         }
     }
 
