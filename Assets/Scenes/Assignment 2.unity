@@ -486,7 +486,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a318caaacd8fe44c8efddbe8dce6114, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  crosshair: {fileID: 0}
+  crosshairRed: {fileID: 2800000, guid: 6778fab511d18a6419aa4ee2ba232b18, type: 3}
+  crosshairGreen: {fileID: 2800000, guid: 4b5b72ab5e385944db6a88658733689c, type: 3}
+  lookingAtItem: 0
   magicStone: 0
   questUI: {fileID: 1324840879}
 --- !u!4 &975243650
