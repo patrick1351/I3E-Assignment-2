@@ -40,6 +40,8 @@ public class SamplePlayer : MonoBehaviour
     public Vector3 playerRotation;
     public Vector3 cameraRotation;
 
+    public GameManager gameManagerScript;
+
     void Awake()
     {
         playerRotation = transform.rotation.eulerAngles;
@@ -78,6 +80,7 @@ public class SamplePlayer : MonoBehaviour
             Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.green);
             if (Input.GetKeyDown("e") && hitInfo.collider.gameObject.name == "Magic Stone")
             {
+                ++gameManagerScript.magicStone;
                 Debug.Log("Collecting magic stone");
             }
             

@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public Texture2D crosshair;
 
+    public int magicStone;
+
+    public TextMeshProUGUI questUI;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -16,6 +21,6 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        questUI.text = "Magic Stone: " + magicStone.ToString();
     }
 }
