@@ -78,15 +78,16 @@ public class SamplePlayer : MonoBehaviour
         if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance, layerMask))
         {
             Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.green);
+            gameManagerScript.lookingAtItem = true;
             if (Input.GetKeyDown("e") && hitInfo.collider.gameObject.name == "Magic Stone")
             {
                 ++gameManagerScript.magicStone;
                 Debug.Log("Collecting magic stone");
             }
-            
-            
-        } else
+        } 
+        else
         {
+            gameManagerScript.lookingAtItem = false;
             Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.red);
         }
     }
