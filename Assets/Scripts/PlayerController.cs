@@ -1,24 +1,14 @@
-/******************************************************************************
-Author: Elyas Chua-Aziz
-
-Name of Class: DemoPlayer
-
-Description of Class: This class will control the movement and actions of a 
-                        player avatar based on user input.
-
-Date Created: 09/06/2021
-******************************************************************************/
-
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SamplePlayer : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     /// <summary>
     /// The distance this player will travel per second.
     /// </summary>
     [SerializeField]
+    private float walkSpeed;
     private float moveSpeed;
 
     [SerializeField]
@@ -76,7 +66,7 @@ public class SamplePlayer : MonoBehaviour
 
         //Draw line will show green if hit and red if no hit
         RaycastHit hitInfo;
-        if(Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance, layerMaskQuest))
+        if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance, layerMaskQuest))
         {
             Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.green);
             gameManagerScript.lookingAtItem = true;
@@ -101,7 +91,7 @@ public class SamplePlayer : MonoBehaviour
                     Debug.Log("Collecting flower");
                 }
             }
-        } 
+        }
         else if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance, layerMaskPortal))
         {
             Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.green);
@@ -133,9 +123,9 @@ public class SamplePlayer : MonoBehaviour
 
     private IEnumerator Idle()
     {
-        while(currentState == "Idle")
+        while (currentState == "Idle")
         {
-            if(Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
+            if (Input.GetAxis("Horizontal") != 0 || Input.GetAxis("Vertical") != 0)
             {
                 nextState = "Moving";
             }
@@ -182,7 +172,18 @@ public class SamplePlayer : MonoBehaviour
 
         Vector3 movementVector = xMovement + zMovement;
 
-        if(movementVector.sqrMagnitude > 0)
+        if (Input.GetKey(KeyCode.LeftShift))
+        {
+            moveSpeed = walkSpeed * 2.2f;
+            Debug.Log("Sprinting");
+        }
+        else
+        {
+            moveSpeed = walkSpeed;
+            Debug.Log("Walking");
+        }
+
+        if (movementVector.sqrMagnitude > 0)
         {
             movementVector *= moveSpeed * Time.deltaTime;
             newPos += movementVector;
