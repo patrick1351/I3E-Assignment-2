@@ -5,37 +5,41 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-    public Texture2D crosshairRed;
-    public Texture2D crosshairGreen;
-    private Texture2D crosshair;
+    public GameObject crosshairRed;
+    public GameObject crosshairGreen;
     public bool lookingAtItem;
 
     public int magicStone;
+    public int flower;
+    public int waterBottle;
 
     public TextMeshProUGUI questUI;
     
     // Start is called before the first frame update
     void Start()
     {
-        
+        crosshairRed.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
+        crosshairGreen.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
     }
 
     // Update is called once per frame
     void Update()
     {
+        
+
+        //Change color of crosshair if the player is looking at interactble item
         if (lookingAtItem)
         {
-            crosshair = crosshairGreen;
-        }
-        else
+            crosshairRed.SetActive(false);
+            crosshairGreen.SetActive(true);
+        } else
         {
-            crosshair = crosshairRed;
+            crosshairRed.SetActive(true);
+            crosshairGreen.SetActive(false);
         }
-
-        Vector2 cursorLocation = new Vector2(crosshair.width / 2, crosshair.height / 2);
-        Cursor.SetCursor(crosshair, cursorLocation, CursorMode.Auto);
 
         questUI.SetText("Quest\n" +
-                        "Magic Stone: {0}", magicStone);
+                        "Magic Stone: {0}\n" +
+                        "Flower: {1}", magicStone, flower);
     }
 }

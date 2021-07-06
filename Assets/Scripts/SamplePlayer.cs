@@ -79,10 +79,26 @@ public class SamplePlayer : MonoBehaviour
         {
             Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.green);
             gameManagerScript.lookingAtItem = true;
-            if (Input.GetKeyDown("e") && hitInfo.collider.gameObject.name == "Magic Stone")
+
+            if (Input.GetKeyDown("e"))
             {
-                ++gameManagerScript.magicStone;
-                Debug.Log("Collecting magic stone");
+                //Checking the object is correct
+                //Will change UI to reflect collection
+                if (hitInfo.collider.gameObject.name == "Magic Stone")
+                {
+                    ++gameManagerScript.magicStone;
+                    Debug.Log("Collecting magic stone");
+                }
+                else if (hitInfo.collider.gameObject.name == "Water")
+                {
+                    ++gameManagerScript.waterBottle;
+                    Debug.Log("Collecting water");
+                }
+                else if (hitInfo.collider.gameObject.name == "Flower")
+                {
+                    ++gameManagerScript.flower;
+                    Debug.Log("Collecting flower");
+                }
             }
         } 
         else
