@@ -4,9 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    /// <summary>
     /// The distance this player will travel per second.
-    /// </summary>
     [SerializeField]
     private float walkSpeed;
     private float moveSpeed;
@@ -19,10 +17,7 @@ public class PlayerController : MonoBehaviour
 
     private int currentStage;
 
-    /// <summary>
-    /// The camera attached to the player model.
-    /// Should be dragged in from Inspector.
-    /// </summary>
+    /// The camera attached to the player model should be dragged in from Inspector.
     public Camera playerCamera;
 
     private string currentState;
@@ -32,13 +27,6 @@ public class PlayerController : MonoBehaviour
     public Vector3 cameraRotation;
 
     public GameManager gameManagerScript;
-
-    void Awake()
-    {
-        playerRotation = transform.rotation.eulerAngles;
-        cameraRotation = playerCamera.transform.rotation.eulerAngles;
-
-    }
 
     // Start is called before the first frame update
     void Start()
@@ -74,6 +62,11 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown("e"))
             {
+                if (hitInfo.collider.gameObject.name == "Quest Giver")
+                {
+                    hitInfo.collider.gameObject.GetComponent<QuestGiver>().CheckStage();
+                }
+                
                 //Checking the object is correct
                 //Will change UI to reflect collection
                 if (hitInfo.collider.gameObject.name == "Magic Stone")
@@ -118,10 +111,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Sets the current state of the player
-    /// and starts the correct coroutine.
-    /// </summary>
+    //Sets the current state of the player and starts the correct coroutine.
     private void SwitchState()
     {
         StopCoroutine(currentState);
@@ -168,10 +158,8 @@ public class PlayerController : MonoBehaviour
         playerCamera.transform.rotation = Quaternion.Euler(cameraRotation);
     }
 
-    /// <summary>
-    /// Checks and handles movement of the player
-    /// </summary>
-    /// <returns>True if user input is detected and player is moved.</returns>
+    // Checks and handles movement of the player
+    // Returns True if user input is detected and player is moved.
     private bool CheckMovement()
     {
         Vector3 newPos = transform.position;
