@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float interectionDistance;
 
+    private int currentStage;
+
     /// <summary>
     /// The camera attached to the player model.
     /// Should be dragged in from Inspector.
@@ -24,7 +26,6 @@ public class PlayerController : MonoBehaviour
     public Camera playerCamera;
 
     private string currentState;
-
     private string nextState;
 
     public Vector3 playerRotation;
@@ -106,6 +107,14 @@ public class PlayerController : MonoBehaviour
         {
             gameManagerScript.lookingAtItem = false;
             Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.red);
+        }
+
+
+        //Teleports player back to the platform if they fall off the island
+        if(this.transform.position.y < -10)
+        {
+            Debug.Log("Falling into the void");
+            this.transform.position = new Vector3(4, 0, 0);
         }
     }
 
