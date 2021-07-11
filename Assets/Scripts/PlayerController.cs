@@ -19,6 +19,10 @@ public class PlayerController : MonoBehaviour
 
     /// The camera attached to the player model should be dragged in from Inspector.
     public Camera playerCamera;
+    public Rigidbody rigibody;
+    public Vector3 velocity;
+
+    private bool jumping = false;
 
     private string currentState;
     private string nextState;
@@ -34,6 +38,8 @@ public class PlayerController : MonoBehaviour
         nextState = "Idle";
 
         playerRotation = Vector3.zero;
+        rigibody = GetComponent<Rigidbody>();
+        velocity = rigibody.velocity;
     }
 
     // Update is called once per frame
@@ -108,6 +114,24 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("Falling into the void");
             this.transform.position = new Vector3(4, 0, 0);
+        }
+
+        jumping = Input.GetButtonDown("Jump");
+    }
+
+    void FixedUpdate()
+    {
+        if (jumping)
+        {
+            rigibody.velocity = new Vector3(0, 5, 0);
+        }
+
+        velocity = rigibody.velocity;
+
+        if (velocity.y < -8)
+        {
+            Debug.Log("Dummy you falling ");
+            StartCoroutine(ScreenShake(.15f, .5f));
         }
     }
 
@@ -193,5 +217,25 @@ public class PlayerController : MonoBehaviour
             return true;
         }
 
+    }
+
+    IEnumerator ScreenShake(float duration, float strength)
+    {
+        Vector3 originalPos = playerCamera.transform.localPosition;
+
+        float timePass = 0.0f;
+        while(timePass < duration)
+        {
+            float x = Random.Range(-1f, 1f) * strength;
+            float y = Random.Range(-1f, 1f) * strength;
+
+            playerCamera.transform.localPosition = new Vector3(x, y, originalPos.z);
+
+            timePass += Time.deltaTime;
+
+            yield return null;
+        }
+
+        playerCamera.transform.localPosition = originalPos;
     }
 }
