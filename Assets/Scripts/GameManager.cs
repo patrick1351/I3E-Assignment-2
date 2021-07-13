@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public GameObject crosshairGreen;
     public bool lookingAtItem;
 
+    public int currentStage;
+
     public int magicStone;
     public int flower;
     public int waterBottle;
@@ -17,16 +19,19 @@ public class GameManager : MonoBehaviour
     public int toCollectFlower;
     public int toCollectWaterBottle;
 
-    public int[] stageOneQuest;
+    public bool questTopDone;
+
+    public bool[] itemCollected = new bool[] {false, false, false};
 
     public TextMeshProUGUI questUI;
     
     // Start is called before the first frame update
     void Start()
     {
-        toCollectFlower = -1;
-        toCollectMagicStone = -1;
-        toCollectWaterBottle = -1;
+        //toCollectFlower = 0;
+        //toCollectMagicStone = 0;
+        //toCollectWaterBottle = 0;
+        currentStage = -1;
         crosshairRed.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
         crosshairGreen.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
     }
@@ -36,11 +41,9 @@ public class GameManager : MonoBehaviour
     {
         SetCrosshair();
         CheckCollectedItem();
-        
+        CheckCompletedQuest();
 
-        questUI.SetText("Quest\n" +
-                        "Magic Stone: {0}\n" +
-                        "Flower: {1}", magicStone, flower);
+        SetText();
     }
 
     void SetCrosshair()
@@ -58,11 +61,79 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void SetQuestOneQuest(int magicStone, int flower, int waterBottle)
+    {
+        toCollectFlower = flower;
+        toCollectMagicStone = magicStone;
+        toCollectWaterBottle = waterBottle;
+    }
+
     void CheckCollectedItem()
     {
-        if(toCollectMagicStone == magicStone)
+        if(magicStone >= toCollectMagicStone)
         {
-            Debug.Log("All done");
+            Debug.Log("Collected all Magic Stone");
+            magicStone = toCollectMagicStone;
+            itemCollected[0] = true;
         }
+
+        if (flower >= toCollectFlower)
+        {
+            Debug.Log("Collected all Flower");
+            flower = toCollectFlower;
+            itemCollected[1] = true;
+        }
+
+        if (waterBottle >= toCollectWaterBottle)
+        {
+            Debug.Log("Collected all Water Bottle");
+            waterBottle = toCollectWaterBottle;
+            itemCollected[2] = true;
+        }
+    }
+
+    public bool CheckCompletedQuest()
+    {
+        if(itemCollected[0] && itemCollected[1] && itemCollected[2])
+        {
+            Debug.Log("Well done, stage one completed");
+            return true;
+        } else
+        {
+            return false;
+        }
+    }
+
+    void SetText()
+    {
+        if(currentStage == 0)
+        {
+            if (questTopDone)
+            {
+                questUI.SetText("Go back to the quest giver");
+            } 
+            else if (CheckCompletedQuest())
+            {
+                questUI.SetText("Go to the top and use the item");
+            } 
+            else
+            {
+                questUI.SetText("Quest\n" +
+                        "Magic Stone: {0}/{1} \n" +
+                        "Flower: {2}/{3} \n" +
+                        "WaterBottle: {4}/{5}", magicStone, toCollectMagicStone, flower, toCollectFlower, waterBottle, toCollectWaterBottle);
+            }
+            
+        } else
+        {
+            questUI.SetText("");
+        }
+    }
+
+    public void ResetItemCount()
+    {
+        magicStone = 0;
+        flower = 0;
+        waterBottle = 0;
     }
 }

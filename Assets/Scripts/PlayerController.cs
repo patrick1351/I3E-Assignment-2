@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour
         //Only item with the quest will be affected 
         int layerMaskQuest = 1 << LayerMask.NameToLayer("Quest");
         int layerMaskPortal = 1 << LayerMask.NameToLayer("Portal");
+        int layerMaskTop = 1 << LayerMask.NameToLayer("QuestTop");
 
         //Draw line will show green if hit and red if no hit
         RaycastHit hitInfo;
@@ -100,6 +101,17 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown("e"))
             {
                 Debug.Log("Entering Portal");
+            }
+        }
+        else if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance, layerMaskTop))
+        {
+            Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.green);
+            gameManagerScript.lookingAtItem = true;
+
+            if (Input.GetKeyDown("e"))
+            {
+                Debug.Log("Combining");
+                gameManagerScript.questTopDone = true;
             }
         }
         else
