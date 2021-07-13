@@ -28,9 +28,6 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //toCollectFlower = 0;
-        //toCollectMagicStone = 0;
-        //toCollectWaterBottle = 0;
         currentStage = -1;
         crosshairRed.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
         crosshairGreen.transform.position = new Vector2(Screen.width / 2, Screen.height / 2);
@@ -67,6 +64,11 @@ public class GameManager : MonoBehaviour
         toCollectMagicStone = magicStone;
         toCollectWaterBottle = waterBottle;
     }
+    public void SetQuestTwoQuest(int magicStone, int waterBottle)
+    {
+        toCollectMagicStone = magicStone;
+        toCollectWaterBottle = waterBottle;
+    }
 
     void CheckCollectedItem()
     {
@@ -94,14 +96,23 @@ public class GameManager : MonoBehaviour
 
     public bool CheckCompletedQuest()
     {
-        if(itemCollected[0] && itemCollected[1] && itemCollected[2])
+        if(currentStage == 0)
         {
-            Debug.Log("Well done, stage one completed");
-            return true;
-        } else
+            if (itemCollected[0] && itemCollected[1] && itemCollected[2])
+            {
+                Debug.Log("Well done, stage one completed");
+                return true;
+            }
+        } 
+        else if (currentStage == 1)
         {
-            return false;
+            if(itemCollected[0] && itemCollected[2])
+            {
+                Debug.Log("Well done, stage two completed");
+                return true;
+            }
         }
+        return false;
     }
 
     void SetText()
@@ -124,7 +135,25 @@ public class GameManager : MonoBehaviour
                         "WaterBottle: {4}/{5}", magicStone, toCollectMagicStone, flower, toCollectFlower, waterBottle, toCollectWaterBottle);
             }
             
-        } else
+        } 
+        else if (currentStage == 1)
+        {
+            if (questTopDone)
+            {
+                questUI.SetText("Go back to the quest giver");
+            }
+            else if (CheckCompletedQuest())
+            {
+                questUI.SetText("Go to the top and use the item");
+            }
+            else
+            {
+                questUI.SetText("Quest\n" +
+                        "Magic Stone: {0}/{1} \n" +
+                        "Water Bottle: {2}/{3}", magicStone, toCollectMagicStone, waterBottle, toCollectWaterBottle);
+            }
+        }
+        else
         {
             questUI.SetText("");
         }
@@ -135,5 +164,7 @@ public class GameManager : MonoBehaviour
         magicStone = 0;
         flower = 0;
         waterBottle = 0;
+
+        itemCollected = new bool[] { false, false, false };
     }
 }

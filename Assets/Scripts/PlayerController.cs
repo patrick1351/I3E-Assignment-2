@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
 
 
         //Teleports player back to the platform if they fall off the island
-        if(this.transform.position.y < -10)
+        if(this.transform.position.y < -20)
         {
             Debug.Log("Falling into the void");
             this.transform.position = new Vector3(4, 0, 0);
