@@ -1,3 +1,10 @@
+/******************************************************************************
+Author: Patrick
+Name of Class: I3E
+Description of Class: 
+Date Created: 28/6/2021
+******************************************************************************/
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +12,13 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
+    //These two are the crosshair image
     public GameObject crosshairRed;
     public GameObject crosshairGreen;
+
+    /// <summary>
+    /// The bool to check if currently looking at item
+    /// </summary>
     public bool lookingAtItem;
 
     public int currentStage;
@@ -19,8 +31,14 @@ public class GameManager : MonoBehaviour
     public int toCollectFlower;
     public int toCollectWaterBottle;
 
+    /// <summary>
+    /// The quest that requires you to collect item
+    /// </summary>
     public bool questTopDone;
 
+    /// <summary>
+    /// The array that ensures all quest are done
+    /// </summary>
     public bool[] itemCollected = new bool[] {false, false, false};
 
     public TextMeshProUGUI questUI;
@@ -115,6 +133,9 @@ public class GameManager : MonoBehaviour
         return false;
     }
 
+    /// <summary>
+    /// Changes the text accordingly when the quest is done 
+    /// </summary>
     void SetText()
     {
         if(currentStage == 0)
@@ -159,6 +180,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Resets the quest tracked counter
+    /// </summary>
     public void ResetItemCount()
     {
         magicStone = 0;

@@ -20,12 +20,6 @@ public class QuestGiver : MonoBehaviour
         currentQuestStage = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     public void CheckStage()
     {
         if(questGiven == false)
