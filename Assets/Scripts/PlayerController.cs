@@ -159,6 +159,7 @@ public class PlayerController : MonoBehaviour
         int layerMaskQuest = 1 << LayerMask.NameToLayer("Quest");
         int layerMaskPortal = 1 << LayerMask.NameToLayer("Portal");
         int layerMaskTop = 1 << LayerMask.NameToLayer("QuestTop");
+        int layerMaskRitual = 1 << LayerMask.NameToLayer("Ritual");
 
         //Draw line will show green if hit and red if no hit
         RaycastHit hitInfo;
@@ -192,6 +193,12 @@ public class PlayerController : MonoBehaviour
                 {
                     ++gameManagerScript.flower;
                     Debug.Log("Collecting flower");
+                    hitInfo.collider.gameObject.SetActive(false);
+                }
+                else if (hitInfo.collider.gameObject.tag == "Pillar")
+                {
+                    ++gameManagerScript.pillarActivated;
+                    Debug.Log("Activating Pillar");
                     hitInfo.collider.gameObject.SetActive(false);
                 }
             }
@@ -235,6 +242,16 @@ public class PlayerController : MonoBehaviour
                 gameManagerScript.questTopDone = true;
             }
         }
+        else if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance, layerMaskRitual))
+        {
+            Debug.DrawLine(playerCamera.transform.position, playerCamera.transform.position + playerCamera.transform.forward * interectionDistance, Color.green);
+            gameManagerScript.lookingAtItem = true;
+
+            if (Input.GetKeyDown("e"))
+            {
+                fade.FadeOut();
+            }
+        }
         else
         {
             gameManagerScript.lookingAtItem = false;
@@ -255,7 +272,7 @@ public class PlayerController : MonoBehaviour
 
         if (Input.GetKey(KeyCode.LeftShift))
         {
-            moveSpeed = walkSpeed * 2.2f;
+            moveSpeed = walkSpeed * 1.5f;
             Debug.Log("Sprinting");
         }
         else
