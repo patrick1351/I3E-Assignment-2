@@ -12,8 +12,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField]
     private float rotationSpeed;
 
-    
-
     /// <summary>
     /// The distance of the raycast length
     /// </summary>
@@ -35,6 +33,11 @@ public class PlayerController : MonoBehaviour
 
     public GameManager gameManagerScript;
     public Fade fade;
+
+    public GameObject areaOne;
+    public GameObject areaTwo;
+    public GameObject areaThree;
+    public GameObject hub;
 
     /// <summary>
     /// Check that the player is on the ground
@@ -71,10 +74,11 @@ public class PlayerController : MonoBehaviour
 
 
         //Teleports player back to the platform if they fall off the island
-        if (this.transform.position.y < -20)
+        if (this.transform.position.y < -50)
         {
             Debug.Log("Falling into the void");
-            this.transform.position = new Vector3(4, 0, 0);
+            Vector3 hubCord = hub.transform.position;
+            this.transform.position = new Vector3(hubCord.x, hubCord.y, hubCord.z);
         }
 
         //Only when spacebar is pressed and the player is on the ground
@@ -94,7 +98,7 @@ public class PlayerController : MonoBehaviour
     {
         velocity = rigibody.velocity;
 
-        if (velocity.y < -8)
+        if (velocity.y < -20f)
         {
             Debug.Log("Dummy you falling");
             StartCoroutine(ScreenShake(.15f, .2f));
@@ -212,21 +216,25 @@ public class PlayerController : MonoBehaviour
             {
                 if(hitInfo.collider.gameObject.tag == "AreaOne")
                 {
-                    fade.LocationCordinate(4, 0, -5);
+                    Vector3 areaOneCord = areaOne.transform.position;
+                    fade.LocationCordinate(areaOneCord.x, areaOneCord.y, areaOneCord.z);
                 } 
                 else if (hitInfo.collider.gameObject.tag == "AreaTwo")
                 {
-                    fade.LocationCordinate(-7, 0, -5);
+                    Vector3 areaTwoCord = areaTwo.transform.position;
+                    fade.LocationCordinate(areaTwoCord.x, areaTwoCord.y, areaTwoCord.z);
                 }
                 else if (hitInfo.collider.gameObject.tag == "AreaThree")
                 {
-                    fade.LocationCordinate(0, 10, 0);
+                    Vector3 areaThreeCord = areaThree.transform.position;
+                    fade.LocationCordinate(areaThreeCord.x, areaThreeCord.y, areaThreeCord.z);
                 } 
                 else
                 {
-                    //Return back to hub
-                    fade.LocationCordinate(0, 10, 0);
+                    Vector3 hubCord = hub.transform.position;
+                    fade.LocationCordinate(hubCord.x, hubCord.y, hubCord.z);
                 }
+                Debug.Log(hitInfo.collider.gameObject.name);
                 Debug.Log("Entering Portal");
                 fade.FadeOut();
             }
@@ -238,8 +246,9 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown("e"))
             {
-                Debug.Log("Combining");
+                Debug.Log("Collecting heart of the island");
                 gameManagerScript.questTopDone = true;
+                hitInfo.collider.gameObject.SetActive(false);
             }
         }
         else if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, out hitInfo, interectionDistance, layerMaskRitual))
@@ -249,7 +258,8 @@ public class PlayerController : MonoBehaviour
 
             if (Input.GetKeyDown("e"))
             {
-                fade.FadeOut();
+                Debug.Log("end game?");
+                fade.EndGameFade();
             }
         }
         else

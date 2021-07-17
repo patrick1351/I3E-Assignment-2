@@ -22,6 +22,11 @@ public class QuestGiver : MonoBehaviour
 
     public GameManager gameManager;
 
+    public GameObject portalOne;
+    public GameObject portalTwo;
+    public GameObject portalThree;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,7 +45,7 @@ public class QuestGiver : MonoBehaviour
                 gameManager.currentStage = currentQuestStage;
             } else if (currentQuestStage == 1)
             {
-                stageTwoQuest = new int[3] { 2, 1, 0};
+                stageTwoQuest = new int[3] { 2, 0, 1};
                 GiveStageTwoQuest();
                 gameManager.questTopDone = false;
             }
@@ -74,6 +79,7 @@ public class QuestGiver : MonoBehaviour
     {
         if(questGiven == false)
         {
+            portalOne.SetActive(true);
             gameManager.ResetItemCount();
             questGiven = true;
         }
@@ -84,16 +90,18 @@ public class QuestGiver : MonoBehaviour
     {
         if (questGiven == false)
         {
+            portalTwo.SetActive(true);
             gameManager.ResetItemCount();
             questGiven = true;
         }
-        gameManager.SetQuestTwoQuest(stageTwoQuest[0], stageTwoQuest[1]);
+        gameManager.SetQuestTwoQuest(stageTwoQuest[0], stageTwoQuest[2]);
     }
 
     void GiveStageThreeQuest()
     {
         if (questGiven == false)
         {
+            portalThree.SetActive(true);
             gameManager.ResetItemCount();
             questGiven = true;
         }

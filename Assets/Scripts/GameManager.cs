@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     public GameObject crosshairGreen;
 
     public GameObject ritual;
+    public GameObject heartOne;
+    public GameObject heartTwo;
 
     /// <summary>
     /// The bool to check if player currently looking at item
@@ -95,11 +97,11 @@ public class GameManager : MonoBehaviour
         toCollectMagicStone = magicStone;
         toCollectWaterBottle = waterBottle;
     }
-    public void SetQuestTwoQuest(int magicStone, int waterBottle)
+    public void SetQuestTwoQuest(int magicStone, int flower)
     {
         transitioning = false;
+        toCollectFlower = flower;
         toCollectMagicStone = magicStone;
-        toCollectWaterBottle = waterBottle;
     }
     public void SetQuestThreeQuest(int magicStone, int flower, int waterBottle)
     {
@@ -174,7 +176,7 @@ public class GameManager : MonoBehaviour
     {
         if (transitioning)
         {
-            questUI.SetText("");
+            questUI.SetText("Click on me when you are ready");
         }
         else if (currentStage == 0)
         {
@@ -184,7 +186,8 @@ public class GameManager : MonoBehaviour
             } 
             else if (CheckCompletedQuest())
             {
-                questUI.SetText("Go to the top and collect the heart of the island");
+                heartOne.SetActive(true);
+                questUI.SetText("Go and collect the heart of the island at the enterence");
             } 
             else
             {
@@ -203,13 +206,14 @@ public class GameManager : MonoBehaviour
             }
             else if (CheckCompletedQuest())
             {
-                questUI.SetText("Go to the top and collect the heart of the island");
+                heartTwo.SetActive(true);
+                questUI.SetText("Go and collect the heart of the island at the enterence");
             }
             else
             {
                 questUI.SetText("Quest\n" +
                         "Magic Stone: {0}/{1} \n" +
-                        "Water Bottle: {2}/{3}", magicStone, toCollectMagicStone, waterBottle, toCollectWaterBottle);
+                        "Flower: {2}/{3}", magicStone, toCollectMagicStone, flower, toCollectFlower);
             }
         }
         else if (currentStage == 2)
@@ -220,8 +224,8 @@ public class GameManager : MonoBehaviour
             }
             else if (CheckCompletedQuest())
             {
-                questUI.SetText("Go to the top and collect the heart of the island\n" +
-                        "Pillars lefts to activate: {0}/{1}", pillarActivated, toActivatePillar);
+                questUI.SetText("Activate all the pillars\n" +
+                        "Pillars activated: {0}/{1}", pillarActivated, toActivatePillar);
             }
             else
             {

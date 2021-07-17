@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 7634064672901235227}
   - component: {fileID: 6800011894408875454}
   - component: {fileID: 8771474423493228916}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Magicstone3
-  m_TagString: Untagged
+  m_TagString: MagicStone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
