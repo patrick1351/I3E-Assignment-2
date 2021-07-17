@@ -152,7 +152,7 @@ public class GameManager : MonoBehaviour
         } 
         else if (currentStage == 1)
         {
-            if(itemCollected[0] && itemCollected[2])
+            if(itemCollected[0] && itemCollected[1])
             {
                 Debug.Log("Well done, stage two completed");
                 return true;
